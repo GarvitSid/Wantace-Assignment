@@ -89,7 +89,8 @@
   },
   "scripts": {
   "dev": "nodemon src/index.js",
-  "start": "node src/index.js"
+  "start": "node src/index.js",
+  "seed": "node src/config/seed.js"
 },
   "keywords": [],
   "author": "",

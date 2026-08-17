@@ -33,3 +33,12 @@ The pricing logic is strictly executed on the server via `services/calculator.js
 *   The final low and high bounds are calculated by applying the `range_spread_pct` (e.g., ±12%) to the Midpoint and rounding to the nearest whole dollar.
 
 *Note:* The historical estimates in the seed data (e.g., Ana Ruiz's legacy total of 21,480-27,260) are retained for historical display, but new estimates run purely on this deterministic formula.
+
+## 4. Public API & Security Boundaries
+**Status:** Completed
+
+**Decision:** 
+The `GET /api/config` endpoint intentionally strips out `rate_per_sqft`, `multiplier`, and global modifiers before sending the configuration to the client. The frontend only receives the `label` and `value` for each option.
+
+**Reasoning:**
+The client brief requires protecting proprietary pricing formulas so they cannot be read or tampered with from the browser. By restricting the payload strictly to rendering requirements, the frontend remains completely ignorant of the business logic, establishing a hard security boundary.
