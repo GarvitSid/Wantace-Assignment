@@ -1,11 +1,10 @@
 import React from 'react';
+import EstimatorWizard from './components/estimator/EstimatorWizard';
 
 function App() {
   return (
-    <div>
-      
-        <h1>Tailwind is working!</h1>
-      
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <EstimatorWizard />
     </div>
   );
 }

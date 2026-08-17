@@ -42,3 +42,12 @@ The `GET /api/config` endpoint intentionally strips out `rate_per_sqft`, `multip
 
 **Reasoning:**
 The client brief requires protecting proprietary pricing formulas so they cannot be read or tampered with from the browser. By restricting the payload strictly to rendering requirements, the frontend remains completely ignorant of the business logic, establishing a hard security boundary.
+
+## 5. Frontend Architecture & The "Dumb Client"
+**Status:** Completed
+
+**Decision:** 
+The React frontend acts as a pure renderer. The `QuestionField` component dynamically loops through the JSON payload to render inputs based strictly on `question.type`. 
+
+**Reasoning:**
+This satisfies the strict requirement of zero hardcoded pricing or question logic in the client. Furthermore, during development, I decided to remove frontend filtering for inactive questions. Because the Express backend already strips inactive questions via the `GET /api/config` controller, the client can blindly trust the API payload. This centralizes the filtering logic entirely on the server.
