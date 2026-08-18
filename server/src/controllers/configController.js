@@ -13,12 +13,15 @@ const getActiveConfig = async (req, res) => {
     const activeQuestions = config.questions.filter(q => q.active);
 
     // SECURITY BOUNDARY: Strip proprietary rates/multipliers from the options
-    // The frontend only needs 'label' and 'value' to render the form.
     const safeQuestions = activeQuestions.map(q => {
-      const safeOptions = q.options.map(opt => ({
-        label: opt.label,
-        value: opt.value
-      }));
+      
+      // FIX: Only map options if they actually exist (prevents crash on 'number' types)
+      const safeOptions = q.options && q.options.length > 0 
+        ? q.options.map(opt => ({
+            label: opt.label,
+            value: opt.value
+          }))
+        : undefined;
       
       return {
         key: q.key,

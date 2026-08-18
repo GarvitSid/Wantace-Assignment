@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import QuestionField from '../dynamic/QuestionField';
 import { fetchConfig, submitEstimate } from '../../services/api';
+import { Link } from 'react-router-dom';
 
 export default function EstimatorWizard() {
   const [config, setConfig] = useState(null);
@@ -152,6 +153,11 @@ export default function EstimatorWizard() {
           </div>
         </form>
       )}
+      <div className="mt-8 text-center animate-fade-in">
+        <Link to="/admin/login" className="text-sm text-gray-400 hover:text-gray-600 transition-colors">
+          Owner Login
+        </Link>
+      </div>
     </div>
   );
 }

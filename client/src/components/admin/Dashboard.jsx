@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-// Retrieve the API URL from environment variables, defaulting to empty string for relative paths in production
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export default function Dashboard() {
   const [leads, setLeads] = useState([]);
@@ -12,6 +11,7 @@ export default function Dashboard() {
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
 
+  // Initial load on component mount
   useEffect(() => {
     fetchAdminData();
   }, []);
@@ -38,8 +38,16 @@ export default function Dashboard() {
     } catch (error) {
       console.error('Failed to load admin data', error);
     } finally {
+      // This only hides the initial full-page loader. 
+      // Future calls will update data silently in the background!
       setLoading(false);
     }
+  };
+
+  // NEW: Fetch fresh data every time a tab is clicked
+  const handleTabSwitch = (tab) => {
+    setActiveTab(tab);
+    fetchAdminData(); 
   };
 
   const handleConfigSave = async () => {
@@ -57,8 +65,11 @@ export default function Dashboard() {
       
       if (!response.ok) throw new Error('Save failed');
       
+      // NEW: Await the fresh data fetch BEFORE firing the alert
+      // This ensures the new config_version renders instantly on the screen
+      await fetchAdminData(); 
       alert('Configuration Saved! The public estimator is instantly updated with a new version.');
-      fetchAdminData(); 
+      
     } catch (error) {
       alert('Failed to save configuration');
     } finally {
@@ -79,9 +90,15 @@ export default function Dashboard() {
       <nav className="bg-gray-900 text-white p-4 flex justify-between items-center shadow-md">
         <h1 className="text-xl font-bold">Northline Owner Panel</h1>
         <div className="flex gap-4">
-          <button onClick={() => setActiveTab('leads')} className={`px-4 py-2 rounded ${activeTab === 'leads' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}>Leads</button>
-          <button onClick={() => setActiveTab('config')} className={`px-4 py-2 rounded ${activeTab === 'config' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}>Pricing & Config</button>
-          <button onClick={handleLogout} className="px-4 py-2 bg-red-600 rounded hover:bg-red-700">Logout</button>
+
+          <Link to="/" target="_blank" rel="noopener noreferrer" className="px-4 py-2 text-sm bg-gray-700 text-gray-200 rounded hover:bg-gray-600 transition-colors mr-4 border border-gray-600">
+            View Live Estimator ↗
+          </Link>
+
+          {/* UPDATED: Attach handleTabSwitch to the buttons */}
+          <button onClick={() => handleTabSwitch('leads')} className={`px-4 py-2 rounded transition-colors ${activeTab === 'leads' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}>Leads</button>
+          <button onClick={() => handleTabSwitch('config')} className={`px-4 py-2 rounded transition-colors ${activeTab === 'config' ? 'bg-blue-600' : 'hover:bg-gray-700'}`}>Pricing & Config</button>
+          <button onClick={handleLogout} className="px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition-colors">Logout</button>
         </div>
       </nav>
 
@@ -89,7 +106,7 @@ export default function Dashboard() {
         
         {/* LEADS TAB */}
         {activeTab === 'leads' && (
-          <div className="bg-white rounded-lg shadow overflow-hidden overflow-x-auto">
+          <div className="bg-white rounded-lg shadow overflow-hidden overflow-x-auto animate-fade-in">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -101,7 +118,7 @@ export default function Dashboard() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {leads.map((lead, index) => (
-                  <tr key={lead.id || lead._id || index}>
+                  <tr key={lead.id || lead._id || index} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(lead.createdAt || lead.captured_at).toLocaleDateString()}
                     </td>
@@ -135,12 +152,12 @@ export default function Dashboard() {
 
         {/* CONFIG TAB */}
         {activeTab === 'config' && config && (
-          <div className="space-y-6">
+          <div className="space-y-6 animate-fade-in">
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex justify-between items-center mb-6 border-b pb-4">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-800">Pricing Configuration</h2>
-                  <p className="text-gray-500">Currently active version: {config.config_version}</p>
+                  <p className="text-gray-500">Currently active version: <span className="font-bold text-blue-600">{config.config_version}</span></p>
                 </div>
                 <button 
                   onClick={handleConfigSave}

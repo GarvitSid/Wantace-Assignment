@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -77,6 +77,11 @@ export default function Login() {
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
+          <div className="mt-6 text-center">
+            <Link to="/" className="text-sm text-blue-600 hover:text-blue-500 hover:underline">
+              ← Back to Public Estimator
+            </Link>
+            </div>
         </div>
       </div>
     </div>
