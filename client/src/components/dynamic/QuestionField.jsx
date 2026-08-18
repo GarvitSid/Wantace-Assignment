@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function QuestionField({ question, value, onChange }) {
-  if (!question.active) return null;
 
   if (question.type === 'number') {
     return (
