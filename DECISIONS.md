@@ -51,3 +51,21 @@ The React frontend acts as a pure renderer. The `QuestionField` component dynami
 
 **Reasoning:**
 This satisfies the strict requirement of zero hardcoded pricing or question logic in the client. Furthermore, during development, I decided to remove frontend filtering for inactive questions. Because the Express backend already strips inactive questions via the `GET /api/config` controller, the client can blindly trust the API payload. This centralizes the filtering logic entirely on the server.
+
+## 6. Scope Management (What was deliberately NOT built)
+Given the 24-hour constraint, I aggressively prioritized the core business flow, operational stability, and security over peripheral features:
+* **No Complex RBAC/OAuth:** I implemented a secure JWT-based Basic Auth system. Building role-based access control, password reset flows, or Google OAuth would have compromised the time needed to perfect the core calculation engine and dynamic UI rendering.
+* **No Frontend State Management Libraries:** Context/Redux was omitted in favor of simple state passing, keeping the bundle size small and logic straightforward.
+* **No CSV Export / Webhooks:** While listed as stretch goals, I prioritized end-to-end deployment, robust error handling, and documentation over these features to guarantee a flawless core submission.
+
+## 7. Questions for Dale (Production Considerations)
+If this were moving into a full production cycle, I would ask the client:
+1. **Partial Leads:** "If a user answers all the roofing questions but abandons the form at the contact step, do you still want us to log those answers anonymously to see where they dropped off?"
+2. **Tax Handling:** "The current formula does not explicitly detail state/local sales tax. Should tax be baked into the material rates, or applied dynamically based on the customer's zip code?"
+3. **Missing Data Fallbacks:** "If a user bypasses validation and submits a missing required field, the system currently rejects the request entirely. Would you prefer it defaults to the highest/safest multiplier instead to still capture the lead?"
+
+## 8. Next Steps (With 1 More Week)
+1. **Automated Testing:** Implement Jest for the `calculator.js` service to rigorously test edge cases (NaN inputs, zero values, extreme bounds).
+2. **Configuration Diffing:** Add a "Version History" view in the Owner Panel so Dale can see exactly what prices Marcus changed last week.
+3. **CSV Exports:** Add the stretch goal to export the `Leads` table to CSV for external CRM importing.
+4. **Frontend:** Currently the web pages are in standard form(box and test) format. Proper responsive and dynamic web components could be implemented for more client engagement.
