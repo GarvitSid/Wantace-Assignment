@@ -6,8 +6,8 @@ This platform allows a roofing company to capture leads through a dynamic, multi
 
 ## 🔗 Live Links & Access
 
-* **Live Public Estimator:** [[https://wantace-assignment-gules.vercel.app/](https://wantace-assignment-gules.vercel.app/)]
-* **Live Owner Panel:** [(https://wantace-assignment-gules.vercel.app/admin/login](https://wantace-assignment-gules.vercel.app/admin/login)
+* **Live Public Estimator:** [https://wantace-assignment-gules.vercel.app](https://wantace-assignment-gules.vercel.app/)
+* **Live Owner Panel:** [https://wantace-assignment-gules.vercel.app/admin/login](https://wantace-assignment-gules.vercel.app/admin/login)
 * **Live API Backend:** [https://wantace-assignment-mrig.onrender.com](https://wantace-assignment-mrig.onrender.com)
 
 ### Test Credentials (Owner Panel)
