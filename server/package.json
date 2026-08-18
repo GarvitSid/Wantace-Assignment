@@ -41,6 +41,7 @@
     "inherits": "^2.0.4",
     "ipaddr.js": "^1.9.1",
     "is-promise": "^4.0.0",
+    "jsonwebtoken": "^9.0.3",
     "kareem": "^3.3.0",
     "math-intrinsics": "^1.1.0",
     "media-typer": "^1.1.1",
@@ -88,10 +89,10 @@
     "wrappy": "^1.0.2"
   },
   "scripts": {
-  "dev": "nodemon src/index.js",
-  "start": "node src/index.js",
-  "seed": "node src/config/seed.js"
-},
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/config/seed.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

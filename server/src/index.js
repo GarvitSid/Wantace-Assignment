@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const publicRoutes = require('./routes/publicRoutes');
 const mongoose = require('mongoose');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // API Routes
 app.use('/api', publicRoutes);
+app.use('/api', adminRoutes);
 
 // Health check route
 app.get('/health', (req, res) => {
