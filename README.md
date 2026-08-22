@@ -14,6 +14,10 @@ This platform allows a roofing company to capture leads through a dynamic, multi
 * **Username:** `owner`
 * **Password:** `roof2026!`
 
+
+
+**NOTE:** Render(server) takes around a minute to start, so website will display "loading estimator..." text for about a minute. Once Render starts, website will work just fine.
+
 ---
 
 ## 🛠 Tech Stack
@@ -38,3 +42,23 @@ Follow these steps to run the application locally from a clean clone.
 ```bash
 git clone https://github.com/GarvitSid/Wantace-Assignment
 cd wantace-assignment
+```
+
+
+### 2. Prepare.env file
+
+according to .env.example file
+
+
+### 3. Start Server
+```bash
+cd server
+npm start
+```
+
+
+### 4. Start Frontend
+```bash
+cd client
+npm start
+```
